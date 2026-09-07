@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EnglishAI Tutor — Inglés en 30 Días</title>
+<link rel="stylesheet" href="Style.css">
+</head>
+<body>
+
+<!-- ============ SPLASH / ONBOARDING ============ -->
+<div id="splash" class="splash">
+  <div class="splash-card">
+    <div class="logo-badge">🎓</div>
+    <h1>EnglishAI <span>Tutor</span></h1>
+    <p class="tagline">Aprende inglés técnico en <strong>30 días</strong> — escritura, audio, conversación en vivo y más.</p>
+
+    <h2>¿Cuál es tu nivel actual?</h2>
+    <div class="level-picker">
+      <button class="level-btn" data-level="basico">
+        <span class="level-icon">🌱</span>
+        <strong>Básico</strong>
+        <small>A1 – Empiezo desde cero</small>
+      </button>
+      <button class="level-btn" data-level="intermedio">
+        <span class="level-icon">🌿</span>
+        <strong>Intermedio</strong>
+        <small>B1 – Entiendo frases simples</small>
+      </button>
+      <button class="level-btn" data-level="avanzado">
+        <span class="level-icon">🌳</span>
+        <strong>Avanzado</strong>
+        <small>C1 – Quiero fluidez técnica</small>
+      </button>
+    </div>
+    <p class="hint">💡 Puedes cambiar tu nivel en cualquier momento.</p>
+  </div>
+</div>
+
+<!-- ============ APP PRINCIPAL ============ -->
+<div id="app" class="app hidden">
+
+  <!-- Sidebar / navegación -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="logo-badge sm">🎓</span>
+      <span>EnglishAI</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" data-view="dashboard">🏠 <span>Inicio</span></button>
+      <button class="nav-btn" data-view="plan">📅 <span>Plan 30 días</span></button>
+      <button class="nav-btn" data-view="clases">🧩 <span>Clases</span></button>
+      <button class="nav-btn" data-view="live">🎥 <span>Clase en vivo</span></button>
+      <button class="nav-btn" data-view="progreso">📊 <span>Mi progreso</span></button>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="level-switch">
+        <label>Nivel:</label>
+        <select id="levelSelect">
+          <option value="basico">Básico</option>
+          <option value="intermedio">Intermedio</option>
+          <option value="avanzado">Avanzado</option>
+        </select>
+      </div>
+      <button id="voiceTestBtn" class="btn ghost sm">🔊 Probar voz del tutor</button>
+    </div>
+  </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Contenido principal -->
+  <main class="main">
+
+    <!-- Topbar móvil -->
+    <header class="topbar">
+      <button id="menuBtn" class="icon-btn">☰</button>
+      <strong>EnglishAI Tutor</strong>
+      <button id="voiceTestBtn2" class="icon-btn">🔊</button>
+    </header>
+
+    <!-- ======= VISTA: DASHBOARD ======= -->
+    <section id="view-dashboard" class="view active">
+      <div class="hero">
+        <div>
+          <h1 id="greeting">¡Hola! 👋</h1>
+          <p id="heroSub">Tu plan de 30 días está listo. ¡Empecemos!</p>
+        </div>
+        <div class="streak-card">
+          <span class="streak-num" id="streakDays">0</span>
+          <span class="streak-label">días seguidos</span>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><span id="statProgress">0%</span><label>Plan completado</label></div>
+        <div class="stat-card"><span id="statDays">0/30</span><label>Días del plan</label></div>
+        <div class="stat-card"><span id="statScore">0</span><label>Puntos</label></div>
+        <div class="stat-card"><span id="statTime">0 min</span><label>Tiempo de estudio</label></div>
+      </div>
+
+      <h2 class="section-title">▶ Continúa donde quedaste</h2>
+      <div id="continueCard" class="continue-card"></div>
+
+      <h2 class="section-title">🧩 Tipos de clase</h2>
+      <div class="class-types">
+        <div class="type-card" data-goto="clases" data-type="escritura">✍️<strong>Escritura</strong><small>Dictado y redacción técnica</small></div>
+        <div class="type-card" data-goto="clases" data-type="audio">🎧<strong>Audio / Escucha</strong><small>Comprensión auditiva</small></div>
+        <div class="type-card" data-goto="clases" data-type="habla">🗣️<strong>Conversación</strong><small>Habla con el tutor IA</small></div>
+        <div class="type-card" data-goto="clases" data-type="vocabulario">📚<strong>Vocabulario</strong><small>Términos técnicos</small></div>
+        <div class="type-card" data-goto="clases" data-type="lectura">📖<strong>Lectura</strong><small>Textos técnicos</small></div>
+        <div class="type-card" data-goto="clases" data-type="gramatica">⚙️<strong>Gramática</strong><small>Estructuras clave</small></div>
+      </div>
+    </section>
+
+    <!-- ======= VISTA: PLAN 30 DÍAS ======= -->
+    <section id="view-plan" class="view">
+      <h1 class="page-title">📅 Tu plan de 30 días — <span id="planLevelName"></span></h1>
+      <p class="page-sub">Un día = una lección corta (15–25 min). Marca tus días completados.</p>
+      <div id="planGrid" class="plan-grid"></div>
+    </section>
+
+    <!-- ======= VISTA: CLASES ======= -->
+    <section id="view-clases" class="view">
+      <h1 class="page-title">🧩 Clases interactivas</h1>
+      <p class="page-sub">Elige el tipo de clase y practica con el tutor de voz.</p>
+      <div class="filter-tabs" id="classFilters">
+        <button class="tab active" data-type="all">Todas</button>
+        <button class="tab" data-type="escritura">✍️ Escritura</button>
+        <button class="tab" data-type="audio">🎧 Audio</button>
+        <button class="tab" data-type="habla">🗣️ Conversación</button>
+        <button class="tab" data-type="vocabulario">📚 Vocabulario</button>
+        <button class="tab" data-type="lectura">📖 Lectura</button>
+        <button class="tab" data-type="gramatica">⚙️ Gramática</button>
+      </div>
+      <div id="lessonsList" class="lessons-list"></div>
+    </section>
+
+    <!-- ======= VISTA: CLASE EN VIVO ======= -->
+    <section id="view-live" class="view">
+      <h1 class="page-title">🎥 Clase en vivo con el tutor</h1>
+      <p class="page-sub">Activa tu cámara y micrófono para practicar pronunciación cara a cara con el tutor.</p>
+
+      <div class="live-layout">
+        <div class="video-panel">
+          <div class="video-wrap">
+            <video id="liveVideo" autoplay playsinline muted></video>
+            <div id="videoPlaceholder" class="video-placeholder">
+              <span>📷</span>
+              <p>La cámara está apagada</p>
+            </div>
+            <div id="tutorAvatar" class="tutor-avatar hidden">
+              <div class="avatar-face">🤖</div>
+              <div class="speaking-waves" id="speakingWaves"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+          </div>
+          <div class="live-controls">
+            <button id="camBtn" class="btn">📷 Activar cámara</button>
+            <button id="micBtn" class="btn">🎙️ Activar micrófono</button>
+            <button id="speakBtn" class="btn primary">🗣️ Hablar con el tutor</button>
+          </div>
+          <p class="mic-note" id="micLevelNote">Nivel de voz: <span id="micLevel">—</span></p>
+        </div>
+
+        <div class="chat-panel">
+          <h3>💬 Conversación</h3>
+          <div id="chatBox" class="chat-box"></div>
+          <div class="chat-input-row">
+            <input type="text" id="chatInput" placeholder="Escribe en inglés…" autocomplete="off">
+            <button id="chatSend" class="btn primary">➤</button>
+          </div>
+          <div class="quick-phrases">
+            <span>Frases rápidas:</span>
+            <button class="chip" data-phrase="Good morning! Can we start the class?">Good morning! Can we start the class?</button>
+            <button class="chip" data-phrase="How do you say this in English?">How do you say this in English?</button>
+            <button class="chip" data-phrase="Can you repeat that more slowly, please?">Can you repeat that more slowly, please?</button>
+            <button class="chip" data-phrase="Thank you for the class! See you tomorrow.">Thank you for the class! See you tomorrow.</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= VISTA: PROGRESO ======= -->
+    <section id="view-progreso" class="view">
+      <h1 class="page-title">📊 Mi progreso</h1>
+      <div class="progress-hero">
+        <div class="ring-wrap">
+          <svg class="ring" viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="52"/>
+            <circle class="ring-fg" id="ringFg" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="ring-label"><span id="ringPct">0%</span><small>completado</small></div>
+        </div>
+        <div class="progress-info">
+          <p>🏅 <strong id="badgeName">Novato</strong> — <span id="badgeDesc">Comienza tu viaje</span></p>
+          <p>⭐ Puntos: <strong id="pts2">0</strong></p>
+          <p>📅 Días completados: <strong id="daysDone">0</strong> de 30</p>
+          <p>🎙️ Pronunciación: <strong id="pronScore">—</strong></p>
+          <button id="resetBtn" class="btn danger sm">🗑️ Reiniciar progreso</button>
+        </div>
+      </div>
+      <h2 class="section-title">Historial de actividad</h2>
+      <ul id="activityLog" class="activity-log"><li>Sin actividad todavía.</li></ul>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============ MODAL DE LECCIÓN ============ -->
+<div id="lessonModal" class="modal hidden">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div id="lessonContent"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="Script.js"></script>
+</body>
+</html>
